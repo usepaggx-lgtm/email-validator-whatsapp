@@ -27,8 +27,9 @@ app.get('/health', (c) => c.json({ status: 'ok', uptime: process.uptime() }))
 
 app.post('/api/instance/create', async (c) => {
   const { id, name } = await c.req.json()
-  if (!id || !name) return c.json({ error: 'id and name required' }, 400)
-  const instance = await whatsapp.createInstance(id, name)
+  if (!name) return c.json({ error: 'name required' }, 400)
+  const instanceId = id || name.toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + Date.now().toString(36)
+  const instance = await whatsapp.createInstance(instanceId, name)
   return c.json({ instance })
 })
 
