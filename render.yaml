@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: email-validator-whatsapp
+    runtime: node
+    region: oregon
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: PORT
+        value: "3003"
+      - key: SESSIONS_DIR
+        value: /data/sessions
+      - key: WHATSAPP_API_KEY
+        value: prod-wh-api-key-2024
